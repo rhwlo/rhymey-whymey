@@ -14,7 +14,9 @@ for word, prons in common_words.iteritems():
         syllables = len(filter(lambda s: s[-1].isdigit(), pron))
         rhyme = '-'.join(dropwhile(lambda s: '1' not in s, pron)) if syllables > 1 else '-'.join(pron)
         try:
-            rhyming_dict[syllables][rhyme].append(word)
+            # sadly, this is easier than making it a set and then converting back to lists
+            if word not in rhyming_dict[syllables][rhyme]:
+                rhyming_dict[syllables][rhyme].append(word)
         except KeyError:
             try:
                 rhyming_dict[syllables][rhyme] = [word]
